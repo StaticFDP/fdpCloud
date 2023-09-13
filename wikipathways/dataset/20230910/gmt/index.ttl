@@ -1,0 +1,8 @@
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix fdp-o: <http://purl.org/fdp/fdp-o#> .
+@prefix ldp:   <http://www.w3.org/ns/ldp#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<https://fdp.wikipathways.org/dataset/20230910/gmt> a dcat:Distribution ;
+  dct:title "WikiPathways 20230910, GMT files" .

@@ -1,0 +1,16 @@
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix fdp-o: <http://purl.org/fdp/fdp-o#> .
+@prefix ldp:   <http://www.w3.org/ns/ldp#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<https://fdp.wikipathways.org/dataset/20230610/> a dcat:Dataset ;
+  dct:title "WikiPathways 20230610" ;
+  dcat:distribution <https://wikipathways.github.io/fdp/dataset/20230610/gpml> ,
+    <https://wikipathways.github.io/fdp/dataset/20230610/gmt> .
+
+<https://fdp.wikipathways.org/dataset/20230610/gpml> a dcat:Distribution ;
+  dct:title "WikiPathways 20230610, GPML files" .
+
+<https://fdp.wikipathways.org/dataset/20230610/gmt> a dcat:Distribution ;
+  dct:title "WikiPathways 20230610, GMT files" .

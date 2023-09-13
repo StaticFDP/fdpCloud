@@ -1,0 +1,59 @@
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix fdpo: <https://w3id.org/fdp/fdp-o#> .
+@prefix ldp:   <http://www.w3.org/ns/ldp#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix ldp:   <http://www.w3.org/ns/ldp#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:     <http://xmlns.com/foaf/0.1/> .
+
+<https://fdp.wikipathways.org/> a dcat:Resource, dcat:DataService, fdpo:MetadataService, fdpo:FairDataPoint ;
+  rdfs:label "WikiPathways FAIR Data Point";
+  dct:title "WikiPathways FAIR Data Point";
+  dct:conformsTo <https://www.purl.org/fairtools/fdp/schema/0.1/fdpMetadata>;
+  dct:description "This FAIR Data Point deployment is used to describe WikiPathways.";
+  dct:hasVersion "1.0" ;
+  dct:license <http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0>;
+  dct:publisher <https://wikipathways.org/>;
+  dct:conformsTo [ rdfs:label "FAIR Data Point Profile" ];
+  dct:accessRights <https://fdp.wikipathways.org/#accessRights> ;
+  dct:language <http://id.loc.gov/vocabulary/iso639-1/en>;
+  fdpo:metadataIssued "2023-03-10T07:42:08.000Z"^^xsd:dateTime;
+  fdpo:metadataModified "2023-09-10T13:06:00.000Z"^^xsd:dateTime;
+  fdpo:metadataCatalog
+    <https://fdp.wikipathways.org/catalog> .
+
+<https://wikipathways.org/> a foaf:Agent ; foaf:name "WikiPathways" .
+
+<https://fdp.wikipathways.org/#accessRights> a dct:RightsStatement;
+  dct:description "This resource has no access restriction" .
+  
+<http://fdp.wikipathways.org/catalogs/> a ldp:DirectContainer;
+  dct:title "WikiPathways Catalogs";
+  ldp:hasMemberRelation <https://w3id.org/fdp/fdpo#metadataCatalog> ;
+  ldp:membershipResource <https://fdp.wikipathways.org/> ;
+  ldp:contains <https://fdp.wikipathways.org/catalog/> .
+
+<https://fdp.wikipathways.org/catalog/> a dcat:Catalog ;
+  rdfs:label "WikiPathways Catalog" ;
+  dct:title "WikiPathways Catalog" ;
+  foaf:homePage <https://data.wikipathways.org/> ;
+  fdpo:metadataIssued "2023-03-10T07:42:08.000Z"^^xsd:dateTime;
+  fdpo:metadataModified "2023-09-10T13:06:00.000Z"^^xsd:dateTime;
+  dct:issued "2023-03-10T07:42:08.000Z"^^xsd:dateTime;
+  dct:modified "2023-09-10T13:06:00.000Z"^^xsd:dateTime;
+  dct:conformsTo [ rdfs:label "Catalog Profile" ] ;
+  dct:isPartOf <http://fdp.wikipathways.org/>;
+  dcat:dataset <https://wikipathways.github.io/fdp/dataset/20230910/> .
+
+<https://fdp.wikipathways.org/dataset/20230910/> a dcat:Dataset ;
+  dct:title "WikiPathways 20230910" ;
+  dcat:distribution <https://wikipathways.github.io/fdp/dataset/20230910/gpml> ,
+    <https://wikipathways.github.io/fdp/dataset/20230910/gmt> .
+
+<https://fdp.wikipathways.org/dataset/20230910/gpml> a dcat:Distribution ;
+  dct:title "WikiPathways 20230910, GPML files" .
+  
+<https://fdp.wikipathways.org/dataset/20230910/gmt> a dcat:Distribution ;
+  dct:title "WikiPathways 20230910, GMT files" .
+  
