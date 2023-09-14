@@ -1,0 +1,28 @@
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fdpo: <https://w3id.org/fdp/fdp-o#> .
+@prefix language: <http://id.loc.gov/vocabulary/iso639-1/> .
+<http://id.loc.gov/vocabulary/iso639-1/en>
+<https://fdpcloud.org/uniprot/catologs/> a dcat:Resource, dcat:DataService, fdpo:MetadataService>,
+    fdpo:FAIRDataPoint ;
+    rdfs:label "Uniprot Fair Data Point"@en;
+    dcterms:title "Uniprot Fair Data Point"@en;
+    dcterms:hasVersion "0.0.1"^^xsd:string;
+    fdpo:metadataIssued "2023-09-14T00:00:00Z"^^xsd:dateTime;
+    fdpo:metadataModified "2023-09-14T00:00:00Z"^^xsd:dateTime;
+    dcterms:license wd:Q6905323;
+    dcterms:description "UniProt is the world’s leading high-quality, comprehensive and freely accessible resource of protein sequence and functional information."@en;
+    dcterms:language language:en ;
+    dcterms:accessRights <https://fdpcloud.org/uniprot#accessRights> ;
+
+<https://fdpcloud.org/uniprot#accessRights> a dcterms:RightsStatement;
+   dcterms:description "This resource has no access restriction" .
+
+<https://fdpcloud.org/uniprot#publisher> a foaf:Agent;
+  foaf:name "Micelio BV, as a first draft to test FDP Cloud" .
+
+
+
