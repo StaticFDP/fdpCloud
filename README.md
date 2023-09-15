@@ -52,6 +52,8 @@ The (default) attention key is control a (`^a` below). Here are the commands use
 
 See [Screen Quck Reference](https://gist.github.com/jctosta/af918e1618682638aa82) for more tips.
 
+You typically finish a session by detaching from screen with `^a d` before logging out or closing your terminal window.
+
 # Debian packages
 
 | name                        | version           | architecture | description                                           |
