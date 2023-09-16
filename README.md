@@ -14,7 +14,34 @@ Standard Apache2 server with these additional modules enabled with e.g. `a2enmod
 The `000-default` config in /etc/apache/sites-enabled is removed; replaced with:
 `fdpcloud.org.conf -> ../sites-available/fdpcloud.org.conf`
 
-If you modify configs or modules run this as root: `apachectl graceful`
+If you modify configs or modules run this as root: `apachectl graceful`.
+
+### subdomain config
+Subdomains are included in the `/etc/apache2/sites-available/subdomains.d/` directory.
+They connects a valid domain name (all lowercase) with a possibly mixed-case path to the contents.
+The example below is for a subdomain called `flashcard`:
+```
+<VirtualHost *:80>
+  ServerName flashcard1.fdpcloud.org
+  DocumentRoot /home/fdpCloud/sites/github/StaticFDP/FlashCard1
+  <Directory /home/fdpCloud/sites/github/StaticFDP/FlashCard1>
+    include ./sites-available/fdpcloud-dirConfig
+  </Directory>
+  include ./sites-available/fdpcloud-common
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName flashcard1.fdpcloud.org
+  DocumentRoot /home/fdpCloud/sites/github/StaticFDP/FlashCard1
+  <Directory /home/fdpCloud/sites/github/StaticFDP/FlashCard1>
+    include ./sites-available/fdpcloud-dirConfig
+  </Directory>
+  include ./sites-available/fdpcloud-ssl
+  include ./sites-available/fdpcloud-common
+</VirtualHost>
+```
+
+The repo contents are, of course, available at that subdomain (e.g. `flashcard1.fdpcloud.org`) as well as the directory (e.g. `fdpcloud.org/sites/github/StaticFDP/FlashCard1/`).
 
 ## webhook
 Debian package to handle webhooks; runs on localhost:9000. An apache reverse proxy shuttles requests to it.
@@ -96,20 +123,7 @@ screen -x console
 ^a1 # webhook monitor window
   (cd github/ && git clone https://github.com/StaticFDP/wikidata StaticFDP/FlashCard1)
 ^a2 # add repos window
-```
-Here we cound on your emacs-fu to scroll down to the Subdomains sections in both HTTP and HTTPS and copy e.g. the wikidata entry to make your new subdomain. It should look a bit like:
-```
-<VirtualHost *:80>
-  ServerName &lt;lower-case domain name, e.g. FlashCard1&gt;.fdpcloud.org
-  DocumentRoot /home/fdpCloud/sites/github/StaticFDP/FlashCard1
-  <Directory /home/fdpCloud/sites/github/StaticFDP/FlashCard1>
-    include ./sites-available/fdpcloud-dirConfig
-  </Directory>
-  include ./sites-available/fdpcloud-common
-</VirtualHost>
-```
-- Now back to screen:
-``` bash
+  # use editor or whatever to create virtual host entries for e.g. `flashcard1`; see subdomain config above.
 ^a3 # Apache.conf window
   apachectl graceful
 ```
