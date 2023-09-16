@@ -67,6 +67,63 @@ You typically finish a session by detaching from screen with `^a d` before loggi
 
 # Tasks
 
+## connect to screen
+
+``` bash
+ssh fdpcloud.org
+sudo su -
+  screen -x console              # screen window 0 watches webhook
+```
+If you see "There is no screen to be attached matching console.", you need to [#start screen] (see below).
+You can type `^a "` to see what windows are running in the screen.
+You should see:
+```
+Num Name                                        Flags
+
+   0 webhhook monitor                                $
+   1 add repos                                       $
+   2 Apache.conf                                     $
+   3 Apache control                                  $
+```
+
+## add repo
+- create repo (possibly under StaticFDP)
+- copy HTTPS URL from Code button but chop skip the trailing `.git` (e.g. `https://github.com/StaticFDP/FlashCard1`)
+``` bash
+ssh fdpcloud.org
+sudo su -
+screen -x console
+^a1 # webhook monitor window
+  (cd github/ && git clone https://github.com/StaticFDP/wikidata StaticFDP/FlashCard1)
+^a2 # add repos window
+```
+Here we cound on your emacs-fu to scroll down to the Subdomains sections in both HTTP and HTTPS and copy e.g. the wikidata entry to make your new subdomain. It should look a bit like:
+```
+<VirtualHost *:80>
+  ServerName &lt;lower-case domain name, e.g. FlashCard1&gt;.fdpcloud.org
+  DocumentRoot /home/fdpCloud/sites/github/StaticFDP/FlashCard1
+  <Directory /home/fdpCloud/sites/github/StaticFDP/FlashCard1>
+    include ./sites-available/fdpcloud-dirConfig
+  </Directory>
+  include ./sites-available/fdpcloud-common
+</VirtualHost>
+```
+- Now back to screen:
+``` bash
+^a3 # Apache.conf window
+  apachectl graceful
+```
+- Go back to repo and create a webhook (Settings Webhhoks)
+  - Payload URL: `https://fdpCloud.org/HOOKS/updateFromGithub`
+  - Content type: `application/json`
+  - Secret: `yJJON3k6tT` - - - yes, same for everyone. could change to "NoDOSPlease"
+  - ☑ Enable SSL verification
+  - ☑ just the `push` event
+  - ☑ Active
+  - [Update Webhook]
+
+This should immediate fire a push webhook. you can see the results in the webhook monitor (`^a0`) window.
+
 ## reboot/start
 ``` bash
 $ restart
@@ -89,40 +146,3 @@ sudo su -
     ^aA ^h^h^h^hApache control
 ```
 
-## add repo
-- create repo (possibly under StaticFDP)
-- copy HTTPS URL from Code button but chop skip the trailing `.git` (e.g. `https://github.com/StaticFDP/FlashCard1`)
-``` bash
-ssh fdpcloud.org
-sudo su -
-screen -x console
-^a 1 # screen window 1
-  (cd github/ && git clone https://github.com/StaticFDP/wikidata StaticFDP/FlashCard1)
-^a 2
-```
-Here we cound on your emacs-fu to scroll down to the Subdomains sections in both HTTP and HTTPS and copy e.g. the wikidata entry to make your new subdomain. It should look a bit like:
-```
-<VirtualHost *:80>
-  ServerName &lt;lower-case domain name, e.g. FlashCard1&gt;.fdpcloud.org
-  DocumentRoot /home/fdpCloud/sites/github/StaticFDP/FlashCard1
-  <Directory /home/fdpCloud/sites/github/StaticFDP/FlashCard1>
-    include ./sites-available/fdpcloud-dirConfig
-  </Directory>
-  include ./sites-available/fdpcloud-common
-</VirtualHost>
-```
-- Now back to screen:
-``` bash
-^a 3
-  apachectl graceful
-```
-- Go back to repo and create a webhook (Settings Webhhoks)
-  - Payload URL: `https://fdpCloud.org/HOOKS/updateFromGithub`
-  - Content type: `application/json`
-  - Secret: `yJJON3k6tT` - - - yes, same for everyone. could change to "NoDOSPlease"
-  - ☑ Enable SSL verification
-  - ☑ just the `push` event
-  - ☑ Active
-  - [Update Webhook]
-
-This should immediate fire a push webhook. you can see the results in the webhook monitor screen.
