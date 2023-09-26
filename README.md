@@ -160,3 +160,20 @@ sudo su -
     ^aA ^h^h^h^hApache control
 ```
 
+## install
+Install node and npm for everyone [per SO](https://stackoverflow.com/questions/11542846/nvm-node-js-recommended-install-for-all-users/42445809#42445809).
+(The Ubuntu nodejs package is ancient and the npm package has *every* dependcy.)
+
+`npm ci` of LdHostManager got a gyp error for nodegit (presumably):
+```
+npm ERR! /bin/sh: 1:
+npm ERR! krb5-config: not found
+npm ERR! 
+npm ERR! gyp: Call to 'krb5-config gssapi --libs' returned exit status 127 while in binding.gyp. while trying to load binding.gyp
+```
+[Rectify](https://github.com/nodegit/nodegit/issues/1753#issuecomment-778624918) with
+``` bash
+sudo apt-get install libkrb5-dev -y
+```
+
+`npm ci` takes 10s of minutes so periodically hit the return keep to keep the connection from timing out.
