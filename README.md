@@ -52,7 +52,7 @@ Needs attention every 3 months. This will prompt you to write to the DNS record:
 sudo certbot certonly --manual \
  --preferred-challenges=dns \
  --email webmaster@fdpcloud.org \
- --server https://acme-v02.api.letsencrypt.org/directory
+ --server https://acme-v02.api.letsencrypt.org/directory \
  --agree-tos \
  -d fdpcloud.org -d *.fdpcloud.org
 ```
