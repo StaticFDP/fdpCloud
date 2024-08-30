@@ -57,6 +57,69 @@ sudo certbot certonly --manual \
  -d fdpcloud.org -d *.fdpcloud.org
 ```
 
+This should produce something like:
+``` bash
+root@fdpcloud:~# sudo certbot certonly --manual \
+>  --preferred-challenges=dns \
+>  --email webmaster@fdpcloud.org \
+>  --server https://acme-v02.api.letsencrypt.org/directory \
+>  --agree-tos \
+>  -d fdpcloud.org -d *.fdpcloud.org
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Renewing an existing certificate for fdpcloud.org and *.fdpcloud.org
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please deploy a DNS TXT record under the name:
+
+_acme-challenge.fdpcloud.org.
+
+with the following value:
+
+Qil-e7jrdCsyXVWyxj5WHL9jjva_mcOaBeVN1t7iQSs
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Press Enter to Continue
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please deploy a DNS TXT record under the name:
+
+_acme-challenge.fdpcloud.org.
+
+with the following value:
+
+Y4A3MNvGBp_7VdDpTdg1cdbAhtXIN-2c-jFspBy2xkg
+
+(This must be set up in addition to the previous challenges; do not remove,
+replace, or undo the previous challenge tasks yet. Note that you might be
+asked to create multiple distinct TXT records with the same name. This is
+permitted by DNS standards.)
+
+Before continuing, verify the TXT record has been deployed. Depending on the DNS
+provider, this may take some time, from a few seconds to multiple minutes. You can
+check if it has finished deploying with aid of online tools, such as the Google
+Admin Toolbox: https://toolbox.googleapps.com/apps/dig/#TXT/_acme-challenge.fdpcloud.org.
+Look for one or more bolded line(s) below the line ';ANSWER'. It should show the
+value(s) you've just added.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Press Enter to Continue
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/fdpcloud.org/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/fdpcloud.org/privkey.pem
+This certificate expires on 2024-11-28.
+These files will be updated when the certificate renews.
+
+NEXT STEPS:
+- This certificate will not be renewed automatically. Autorenewal of --manual certificates requires the use of an authentication hook script (--manual-auth-hook) but one was not provided. To renew this certificate, repeat this same certbot command before the certificate's expiry date.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
 ## screen
 General-purpose screen multiplexer. The standard config set up below under [#reboot/start] sets up consoles for maintanance and debugging.
 Here's how to invoke screen:
