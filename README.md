@@ -130,6 +130,19 @@ Press Enter to Continue
 Do another POST:
 ```bash
 curl -sX POST "https://api.hosting.nl/domains/fdpcloud.org/dns" -H "accept: */*" -H "API-TOKEN: SOME SECRET TOKEN HERE" -H "X-CSRF-TOKEN: " -H "Content-Type: application/json" -d '[{"name":"_acme-challenge.fdpcloud.org","type":"TXT","content":"\"Y4A3MNvGBp_7VdDpTdg1cdbAhtXIN-2c-jFspBy2xkg\"","ttl":"60"}]'| jq
+{
+  "success": true,
+  "data": [
+    {
+      "id": "1008112",
+      "type": "TXT",
+      "content": "\"Y4A3MNvGBp_7VdDpTdg1cdbAhtXIN-2c-jFspBy2xkg\"",
+      "name": "_acme-challenge.fdpcloud.org",
+      "prio": 0,
+      "ttl": 60
+    }
+  ]
+}
 ```
 
 and hit Enter to allow the certbot process finish.
@@ -149,7 +162,7 @@ If you like Certbot, please consider supporting our work by:
  * Donating to EFF:                    https://eff.org/donate-le
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ```
-At this point, you should have two TXT records:
+At this point, you will have two TXT records. You can query them with a GET. Note that the `id`s are the same as the responses to the POSTs used to create them:
 ``` bash
 curl -sX GET "https://api.hosting.nl/domains/fdpcloud.org/dns" -H "accept: */*" -H "API-TOKEN: SOME SECRET TOKEN HERE" -H "X-CSRF-TOKEN: " | jq '.data[] | select(.type == "TXT" and .name == "_acme-challenge.fdpcloud.org")'
 {
