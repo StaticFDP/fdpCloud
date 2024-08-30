@@ -79,7 +79,30 @@ Qil-e7jrdCsyXVWyxj5WHL9jjva_mcOaBeVN1t7iQSs
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Press Enter to Continue
+```
 
+FdpCloud is currently hosted by hosting.nl. The following curl will place the above key in the DNS record:
+
+```bash
+curl -sX POST "https://api.hosting.nl/domains/fdpcloud.org/dns" -H "accept: */*" -H "API-TOKEN: SOME SECRET TOKEN HERE" -H "X-CSRF-TOKEN: " -H "Content-Type: application/json" -d '[{"name":"_acme-challenge.fdpcloud.org","type":"TXT","content":"\"Qil-e7jrdCsyXVWyxj5WHL9jjva_mcOaBeVN1t7iQSs\"","ttl":"60"}]'| jq
+{
+  "success": true,
+  "data": [
+    {
+      "id": "1008111",
+      "type": "TXT",
+      "content": "\"Qil-e7jrdCsyXVWyxj5WHL9jjva_mcOaBeVN1t7iQSs\"",
+      "name": "_acme-challenge.fdpcloud.org",
+      "prio": 0,
+      "ttl": 60
+    }
+  ]
+}
+```
+
+Go back tht terminal where you're running certbot and hit Enter. You will be asked to perform this dance one more time:
+
+```
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please deploy a DNS TXT record under the name:
 
@@ -103,7 +126,14 @@ value(s) you've just added.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Press Enter to Continue
+```
+Do another POST:
+```bash
+curl -sX POST "https://api.hosting.nl/domains/fdpcloud.org/dns" -H "accept: */*" -H "API-TOKEN: SOME SECRET TOKEN HERE" -H "X-CSRF-TOKEN: " -H "Content-Type: application/json" -d '[{"name":"_acme-challenge.fdpcloud.org","type":"TXT","content":"\"Y4A3MNvGBp_7VdDpTdg1cdbAhtXIN-2c-jFspBy2xkg\"","ttl":"60"}]'| jq
+```
 
+and hit Enter to allow the certbot process finish.
+```
 Successfully received certificate.
 Certificate is saved at: /etc/letsencrypt/live/fdpcloud.org/fullchain.pem
 Key is saved at:         /etc/letsencrypt/live/fdpcloud.org/privkey.pem
@@ -118,6 +148,43 @@ If you like Certbot, please consider supporting our work by:
  * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
  * Donating to EFF:                    https://eff.org/donate-le
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+At this point, you should have two TXT records:
+``` bash
+curl -sX GET "https://api.hosting.nl/domains/fdpcloud.org/dns" -H "accept: */*" -H "API-TOKEN: SOME SECRET TOKEN HERE" -H "X-CSRF-TOKEN: " | jq '.data[] | select(.type == "TXT" and .name == "_acme-challenge.fdpcloud.org")'
+{
+  "id": "1008111",
+  "name": "_acme-challenge.fdpcloud.org",
+  "type": "TXT",
+  "content": "\"Qil-e7jrdCsyXVWyxj5WHL9jjva_mcOaBeVN1t7iQSs\"",
+  "ttl": "60",
+  "prio": "0",
+  "disabled": "0"
+}
+{
+  "id": "1008112",
+  "name": "_acme-challenge.fdpcloud.org",
+  "type": "TXT",
+  "content": "\"Y4A3MNvGBp_7VdDpTdg1cdbAhtXIN-2c-jFspBy2xkg\"",
+  "ttl": "60",
+  "prio": "0",
+  "disabled": "0"
+}
+```
+which you can DELETE my substituting the appropriate ids into a DELETE request:
+``` bash
+curl -sX DELETE "https://api.hosting.nl/domains/fdpcloud.org/dns" -H "accept: */*" -H "API-TOKEN: SOME SECRET TOKEN HERE" -H "X-CSRF-TOKEN: " -H "Content-Type: application/json" -d '[{"id":"1008111"},{"id":"1008112"}]' | jq
+{
+  "success": true,
+  "data": [
+    {
+      "id": "1008111"
+    },
+    {
+      "id": "1008112"
+    }
+  ]
+}
 ```
 
 ## screen
